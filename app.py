@@ -5,7 +5,7 @@ import google.generativeai as genai
 st.set_page_config(page_title="사회성 이야기 생성기", page_icon="🌟")
 
 # --- 여기에 본인의 API 키를 직접 입력하세요 ---
-api_key = "AIzaSyCjBz0BEihJ9SYKHrJ3vamDKlYGdUvuy4k" 
+api_key = "AIzaSyCmGF7Ic0cw2c-oGievn6ff6O6mK06Z4-I" 
 # ------------------------------------------
 
 # 메인 화면
