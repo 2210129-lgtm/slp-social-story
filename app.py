@@ -1,48 +1,36 @@
 import streamlit as st
 import requests
 
-# 1. 학생님의 진짜 API 키를 여기에 넣으세요
-API_KEY = "AIzaSyAS7Ezm0cTnR0_KDle6ERumw0ESYQKv1g0"
+# 1. '새 프로젝트'에서 만든 키를 여기에 넣으세요!
+API_KEY = "AIzaSyDyZbzfvP_UaUSuRAb4SJw9W-Pa50SjEes"
 
-# 구글이 권장하는 최신 엔드포인트 구조입니다.
-# 모델명 앞에 'models/'를 명시적으로 붙여서 404 에러를 방지합니다.
-URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={API_KEY}"
+# 주소 형식을 v1beta가 아닌 v1으로, 모델명을 가장 확실한 것으로 고정합니다.
+URL = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={API_KEY}"
 
 st.set_page_config(page_title="사회성 이야기 생성기", page_icon="🌟")
 st.title("🌟 우리 아이 맞춤형 AI 이야기")
 
-situation = st.text_input("상황을 입력하세요", placeholder="예: 친구에게 장난감을 빌려달라고 말하고 싶어요")
+situation = st.text_input("상황 입력", placeholder="예: 친구와 싸웠어요")
 
-if st.button("AI 선생님에게 물어보기"):
+if st.button("AI 이야기 만들기"):
     if not situation:
-        st.warning("아이의 상황을 입력해주세요!")
+        st.warning("상황을 입력해주세요.")
     else:
-        with st.spinner('AI 선생님이 실시간으로 답변을 작성 중입니다...'):
+        with st.spinner('AI가 답변을 생성 중입니다...'):
             try:
-                # 구글 API가 요구하는 정확한 JSON 구조입니다.
+                # 가장 표준적인 페이로드 구조
                 payload = {
-                    "contents": [{
-                        "parts": [{
-                            "text": f"너는 다정한 언어치료사야. 5세 아이를 위해 '{situation}' 상황에 대한 따뜻한 위로와 교육적인 이야기 3줄을 지어줘."
-                        }]
-                    }]
+                    "contents": [{"parts": [{"text": f"5세 아이를 위한 사회성 이야기 3줄: {situation}"}]}]
                 }
-                headers = {'Content-Type': 'application/json'}
                 
-                response = requests.post(URL, json=payload, headers=headers)
-                result = response.json()
+                res = requests.post(URL, json=payload)
+                data = res.json()
                 
-                # 답변 추출 성공 시
-                if 'candidates' in result:
-                    ai_story = result['candidates'][0]['content']['parts'][0]['text']
-                    st.success("AI 선생님의 맞춤 이야기 도착!")
-                    st.info(ai_story)
-                # 에러 발생 시 (학생님이 보신 에러가 여기 찍힐 겁니다)
+                if 'candidates' in data:
+                    st.success("AI 답변 성공!")
+                    st.write(data['candidates'][0]['content']['parts'][0]['text'])
                 else:
-                    st.error("AI 응답 생성에 실패했습니다.")
-                    st.json(result) # 여기서 에러 내용을 다시 확인해봐요.
-                    
+                    st.error("이번에도 에러가 발생했습니다. 아래 내용을 캡처해서 알려주세요.")
+                    st.json(data)
             except Exception as e:
-                st.error(f"연결 오류: {e}")
-
-st.caption("© 2026 언어치료 AI 과제 - 진짜 AI 모드")
+                st.error(f"오류 발생: {e}")
