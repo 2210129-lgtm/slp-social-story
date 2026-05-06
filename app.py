@@ -21,9 +21,13 @@ if st.button("이야기 만들기"):
         st.warning("상황을 입력해주세요.")
     else:
         try:
-            # Gemini 설정
+            # Gemini 설정 (가장 최신 안전 버전 방식)
             genai.configure(api_key=api_key)
-            model = genai.GenerativeModel('gemini-pro')
+            
+            # 모델 설정 (가장 범용적인 'gemini-1.5-flash' 사용)
+            model = genai.GenerativeModel(
+                model_name="gemini-1.5-flash"
+            )
             
             # 프롬프트 설정 (페르소나 부여)
             prompt = f"""
