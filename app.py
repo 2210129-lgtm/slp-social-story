@@ -24,7 +24,7 @@ if st.button("AI 이야기 만들기"):
             
             # [핵심] 가장 호환성이 높은 모델 이름으로 시도합니다.
             # 1.5-flash가 안 되면 pro로 자동 전환되도록 모델명을 하나씩 테스트해보는 방식입니다.
-            model_name = 'gemini-1.5-flash' 
+            model_name = 'gemini-pro' 
             model = genai.GenerativeModel(model_name)
             
             with st.spinner('AI가 상황을 분석해서 이야기를 짓고 있습니다...'):
