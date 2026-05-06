@@ -2,7 +2,7 @@ import streamlit as st
 import requests  # 이 라이브러리가 주소를 직접 호출하게 해줍니다.
 
 # 1. 설정
-API_KEY = "AIzaSyDiZqvVqJFoga5oVWKwjVaHKt_yFqjERM0"
+API_KEY = "AIzaSyBgPOkCc5dMbaNwcUeNaZS9HERIw9A-160"
 # 주소를 'v1'으로 직접 고정했습니다.
 API_URL = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={API_KEY}"
 
