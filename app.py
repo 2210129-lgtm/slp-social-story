@@ -23,7 +23,7 @@ if st.button("이야기 만들기"):
         try:
             # Gemini 설정
             genai.configure(api_key=api_key)
-            model = genai.GenerativeModel('gemini-1.5-flash-lastest')
+            model = genai.GenerativeModel('models/gemini-1.5-flash')
             
             # 프롬프트 설정 (페르소나 부여)
             prompt = f"""
