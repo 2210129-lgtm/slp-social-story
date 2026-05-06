@@ -5,7 +5,7 @@ import requests
 API_KEY = "AIzaSyCVQU8SFRDux6mDXuzE4_Bnb1D4WnPEo7w"
 
 # 가장 안정적인 v1beta 주소와 gemini-1.5-flash 모델 경로입니다.
-URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}"
+URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={API_KEY}"
 
 st.set_page_config(page_title="사회성 이야기 생성기", page_icon="🌟")
 st.title("🌟 우리 아이 맞춤형 AI 이야기")
