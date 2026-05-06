@@ -1,46 +1,43 @@
 import streamlit as st
-import requests  # 이 라이브러리가 주소를 직접 호출하게 해줍니다.
+import requests
 
-# 1. 설정
-API_KEY = "AIzaSyBgPOkCc5dMbaNwcUeNaZS9HERIw9A-160"
-# 주소를 'v1'으로 직접 고정했습니다.
-API_URL = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={API_KEY}"
+# 1. 방금 새로 만든 키를 아래 따옴표 안에 넣으세요!
+API_KEY = "AIzaSyAS7Ezm0cTnR0_KDle6ERumw0ESYQKv1g0"
+URL = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={API_KEY}"
 
-# 2. 화면 구성
 st.set_page_config(page_title="사회성 이야기 생성기", page_icon="🌟")
-st.title("🌟 우리 아이 사회성 이야기 생성기")
-st.write("아이의 상황을 입력하면 AI가 이야기를 지어줍니다.")
+st.title("🌟 우리 아이 맞춤형 AI 이야기")
 
-situation = st.text_input("어떤 상황인가요?", placeholder="예: 친구에게 장난감을 빌려달라고 해요")
+situation = st.text_input("상황을 입력하세요", placeholder="예: 친구와 장난감을 나눠 쓰기 싫어해요")
 
 if st.button("AI 이야기 만들기"):
     if not situation:
-        st.warning("상황을 입력해주세요.")
+        st.warning("상황을 먼저 입력해주세요.")
     else:
-        try:
-            with st.spinner('AI 선생님이 이야기를 구성하고 있어요...'):
-                # 구글 서버에 직접 편지를 보냅니다.
+        with st.spinner('AI 선생님이 이야기를 지어내고 있어요...'):
+            try:
+                # 실시간으로 상황에 맞춰 답변을 생성하는 설정
                 payload = {
                     "contents": [{
-                        "parts": [{"text": f"다정한 언어치료사처럼 5세 아이를 위한 사회성 이야기를 3문장으로 써줘. 상황: {situation}"}]
+                        "parts": [{"text": f"너는 다정한 언어치료사야. 5세 아이를 위해 '{situation}' 상황에 대한 따뜻한 이야기 3줄을 지어줘."}]
                     }]
                 }
                 headers = {'Content-Type': 'application/json'}
                 
-                # 주소로 직접 요청 전송
-                response = requests.post(API_URL, json=payload, headers=headers)
+                response = requests.post(URL, json=payload, headers=headers)
                 result = response.json()
                 
-                # 결과에서 텍스트만 뽑아내기
-                answer = result['candidates'][0]['content']['parts'][0]['text']
-                
-            st.success("AI가 이야기를 완성했어요!")
-            st.markdown("---")
-            st.write(answer)
-            st.markdown("---")
-            
-        except Exception as e:
-            st.error(f"최종 호출 실패: {e}")
-            st.info("💡 팁: 이 방식은 서버 주소를 직접 타격하므로 라이브러리 오류를 무시합니다.")
+                # 답변이 잘 왔는지 확인
+                if 'candidates' in result:
+                    answer = result['candidates'][0]['content']['parts'][0]['text']
+                    st.success("AI 선생님의 맞춤 이야기:")
+                    st.info(answer)
+                else:
+                    # 만약 여기서 또 candidates 에러가 나면 원인을 분석해줍니다.
+                    st.error("구글 서버 응답에 문제가 있습니다.")
+                    st.json(result)
+                    
+            except Exception as e:
+                st.error(f"연결 오류가 발생했습니다: {e}")
 
-st.caption("© 2026 언어치료 AI 과제")
+st.caption("© 2026 언어치료 AI 과제 제출용")
