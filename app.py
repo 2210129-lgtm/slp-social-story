@@ -22,19 +22,14 @@ if st.button("이야기 만들기"):
         st.warning("상황을 입력해주세요.")
     else:
         try:
-            # Gemini 설정
-            genai.configure(api_key=api_key)
+            # Gemini 설정 
+            genai.configure(
+                api_key=api_key,
+                client_options={'api_version': 'v1'}
+            )
             
             # 모델 선언 
-            model = genai.GenerativeModel(
-    model_name="gemini-1.5-flash",
-    generation_config={
-        "temperature": 0.7,
-        "top_p": 0.95,
-        "top_k": 64,
-        "max_output_tokens": 1000,
-    }
-)
+            model = genai.GenerativeModel('gemini-1.5-flash')
             
             # 프롬프트 설정
             prompt = f"너는 언어치료사야. 5세 아이 수준으로 '{situation}' 상황에 대한 사회성 이야기를 3문장으로 써줘."
