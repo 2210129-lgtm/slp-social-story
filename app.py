@@ -27,7 +27,7 @@ if st.button("이야기 만들기"):
             
             # 모델 선언 (가장 확실한 이름으로 설정)
             # 'models/'를 붙이지 않고 선언합니다.
-            model = genai.GenerativeModel('gemini-1.5-flash')
+            model = genai.GenerativeModel('models/gemini-1.5-flash')
             
             # 프롬프트 설정
             prompt = f"너는 언어치료사야. 5세 아이 수준으로 '{situation}' 상황에 대한 사회성 이야기를 3문장으로 써줘."
