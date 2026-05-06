@@ -1,12 +1,21 @@
-import streamlit as st
 import google.generativeai as genai
+from google.generativeai.types import RequestOptions
 
-# 1. 페이지 설정
-st.set_page_config(page_title="사회성 이야기 생성기", page_icon="🌟")
+# 1. API 키 설정
+genai.configure(api_key="AIzaSyDiZqvVqJFoga5oVWKwjVaHKt_yFqjERM0")
 
-# 2. API 키 설정 (본인의 개인 계정 키를 정확히 입력하세요)
-api_key = "AIzaSyDiZqvVqJFoga5oVWKwjVaHKt_yFqjERM0" 
+# 2. 모델 선언 (이 부분이 핵심입니다!)
+model = genai.GenerativeModel('gemini-1.5-flash')
 
+# 3. 호출할 때 'v1' 주소를 강제로 사용하도록 설정 (404 v1beta 에러 방지)
+try:
+    response = model.generate_content(
+        "안녕?",
+        request_options=RequestOptions(api_version='v1') # 이 코드가 결제 에러를 피하게 해줍니다.
+    )
+    st.write(response.text)
+except Exception as e:
+    st.error(f"에러 내용: {e}")
 st.title("🌟 우리 아이 사회성 이야기 생성기")
 st.write("아이의 상황을 입력하면 AI가 실시간으로 이야기를 지어줍니다.")
 
