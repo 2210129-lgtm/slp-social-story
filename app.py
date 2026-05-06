@@ -1,14 +1,13 @@
 import streamlit as st
 import google.generativeai as genai
-from google.generativeai.types import RequestOptions
 
 # 1. 설정 및 API 키 입력
-# (방금 알려주신 키를 변수에 담아 아래에서 공통으로 사용합니다)
 MY_API_KEY = "AIzaSyDiZqvVqJFoga5oVWKwjVaHKt_yFqjERM0"
 genai.configure(api_key=MY_API_KEY)
 
-# 2. 모델 선언 (가장 성능이 좋은 1.5-flash 사용)
-model = genai.GenerativeModel('gemini-1.5-flash')
+# 2. 모델 선언 (경로를 더 명확하게 지정)
+# models/ 를 붙여서 선언하면 경로를 더 잘 찾습니다.
+model = genai.GenerativeModel('models/gemini-1.5-flash')
 
 # 3. 화면 구성
 st.set_page_config(page_title="사회성 이야기 생성기", page_icon="🌟")
@@ -24,11 +23,10 @@ if st.button("AI 이야기 만들기"):
         st.warning("상황을 입력해주세요.")
     else:
         try:
-            with st.spinner('AI 선생님이 이야기를 구성하고 있어요...'):
-                # 호출 시 'v1' 주소를 강제 사용하여 404 에러 방지
+            with st.spinner('AI 선생님이 이야기를 구성하고 있습니다...'):
+                # 가장 심플한 호출 방식으로 변경하여 에러 소지를 없앱니다.
                 response = model.generate_content(
-                    f"너는 다정한 언어치료사야. 5세 아이를 위한 사회성 이야기를 만들어줘. 상황: {situation}. 딱 3문장으로 다정하게 써줘.",
-                    request_options=RequestOptions(api_version='v1')
+                    f"너는 다정한 언어치료사야. 5세 아이를 위한 사회성 이야기를 만들어줘. 상황: {situation}. 딱 3문장으로 다정하게 써줘."
                 )
                 
             st.success("AI가 이야기를 완성했어요!")
@@ -38,8 +36,7 @@ if st.button("AI 이야기 만들기"):
             st.markdown("---")
             
         except Exception as e:
-            # 혹시라도 에러가 나면 상세 내용을 보여줍니다.
             st.error(f"오류가 발생했습니다: {e}")
-            st.info("💡 팁: API 키가 활성화되는 중일 수 있습니다. 잠시 후 다시 시도해 보세요.")
+            st.info("💡 팁: 잠시 후 다시 시도해 보세요.")
 
 st.caption("© 2026 언어치료 AI 과제")
