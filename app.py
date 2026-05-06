@@ -24,7 +24,7 @@ if st.button("이야기 만들기"):
             genai.configure(api_key=api_key)
             
             # 모델 선언 (가장 안정적인 최신 명칭)
-            model = genai.GenerativeModel('gemini-1.5-flash')
+            model = genai.GenerativeModel('gemini-pro')
             
             # 프롬프트 구성
             prompt = f"""
