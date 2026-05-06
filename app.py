@@ -5,7 +5,7 @@ import google.generativeai as genai
 st.set_page_config(page_title="사회성 이야기 생성기", page_icon="🌟")
 
 # 2. API 키 설정 (본인의 개인 계정 키를 꼭 넣으세요)
-api_key = "AIza..." 
+api_key = "AIzaSyDiZqvVqJFoga5oVWKwjVaHKt_yFqjERM0" 
 
 st.title("🌟 우리 아이 사회성 이야기 생성기")
 st.write("아이의 상황을 입력하면 AI가 실시간으로 이야기를 지어줍니다.")
