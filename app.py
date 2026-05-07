@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 # 1. 친구에게 받은 키를 그대로 사용하세요
-API_KEY = "AIzaSyCVQU8SFRDux6mDXuzE4_Bnb1D4WnPEo7w"
+API_KEY = "AIzaSyDiZqvVqJFoga5oVWKwjVaHKt_yFqjERM0"
 
 # 무료 티어에서 가장 넉넉한 할당량을 가진 gemini-flash-latest를 사용합니다.
 URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key={API_KEY}"
